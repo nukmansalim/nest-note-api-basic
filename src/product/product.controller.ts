@@ -25,6 +25,6 @@ export class ProductController {
     }
     @Delete(":id")
     deleteProduct(@Param() id: string) {
-        return "this is from deleteProduct method"
+        return this.productService.deleteProduct(id)
     }
 }
