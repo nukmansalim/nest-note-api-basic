@@ -1,16 +1,16 @@
-import { Controller, Get, Post, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param } from '@nestjs/common';
 import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {
     constructor(private productService: ProductService) { }
     @Get()
-    findAll(): string {
-        return "this is findAll method"
+    findAll() {
+        return this.productService.findAll()
     }
     @Get(":id")
-    findOne(): string {
-        return "this is from findOne method"
+    findOne(@Param() params) {
+        return this.productService.findOne(params)
     }
     @Post()
     createProduct(): string {

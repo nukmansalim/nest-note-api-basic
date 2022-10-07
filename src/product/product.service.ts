@@ -10,7 +10,7 @@ export class ProductService {
     async findAll(): Promise<Product[]> {
         return this.productModel.find().exec()
     }
-    async findOne() { }
+    async findOne(id) { }
     async createProduct() { }
     async updateProduct() { }
     async deleteProduct() { }
