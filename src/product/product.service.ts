@@ -18,7 +18,14 @@ export class ProductService {
         const newProduct = await this.productModel.create({ title: body.title, price: body.price, description: body.description })
         return newProduct
     }
-    async updateProduct() { }
+    async updateProduct(id: string, body: createProductDto) {
+        const updated = await this.productModel.updateOne({ id }, {
+            title: body.title,
+            price: body.price,
+            description: body.description
+        })
+        return updated
+    }
     async deleteProduct() { }
 
 }

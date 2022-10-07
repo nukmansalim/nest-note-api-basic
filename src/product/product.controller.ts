@@ -20,11 +20,11 @@ export class ProductController {
 
     }
     @Patch(":id")
-    updateProduct(): string {
-        return "this is from updateProduct method"
+    updateProduct(@Param() id: string, @Body() body: createProductDto) {
+        return this.productService.updateProduct(id, body)
     }
     @Delete(":id")
-    deleteProduct(): string {
+    deleteProduct(@Param() id: string) {
         return "this is from deleteProduct method"
     }
 }
