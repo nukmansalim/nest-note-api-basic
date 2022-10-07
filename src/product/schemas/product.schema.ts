@@ -5,13 +5,15 @@ export type ProductDocument = Product & Document
 
 @Schema()
 export class Product {
-    @Prop()
+    @Prop({ required: true })
     title: string
 
-    @Prop()
+    @Prop({ required: true })
     price: BigInteger
 
     @Prop()
     description: string
 
 }
+
+export const productSchema = SchemaFactory.createForClass(Product)
