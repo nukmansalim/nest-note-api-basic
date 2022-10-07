@@ -14,8 +14,9 @@ export class ProductService {
     async findOne(id: string): Promise<Product> {
         return this.productModel.findOne({ id })
     }
-    async createProduct(body: createProductDto) {
-        return console.log(body)
+    async createProduct(body: createProductDto): Promise<Product> {
+        const newProduct = await this.productModel.create({ title: body.title, price: body.price, description: body.description })
+        return newProduct
     }
     async updateProduct() { }
     async deleteProduct() { }
