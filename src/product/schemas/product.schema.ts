@@ -9,7 +9,7 @@ export class Product {
     title: string
 
     @Prop({ required: true })
-    price: BigInteger
+    price: number
 
     @Prop()
     description: string
