@@ -9,12 +9,12 @@ export class UserService {
     constructor(@InjectModel(User.name)
     private userModel: Model<UserDocument>) { }
 
-    async findAllUsers() {
-        return this.userModel.find().select("-password").exec()
+    async findAllUsers(): Promise<User[]> {
+        return this.userModel.find()
     }
 
-    async findSingleUser() {
-        return this.userModel.findOne().select("-password").exec()
+    async findSingleUser(id: any): Promise<User> {
+        return this.userModel.findOne(id).select("-password").exec()
     }
 
     async createUser(body: createUserDto) {
@@ -23,15 +23,34 @@ export class UserService {
             const { name, password, email } = body
             const hash = await bcrypt.hash(password, 10)
             const createdUser = await this.userModel.create({
-                name, password: hash, email, product: []
+                name, password: hash, email
             })
-            delete createdUser.password
-            return createdUser
+            return this.buildUser(createdUser)
         } catch (err) {
             if (err.code === 11000) throw new HttpException("user is already exists", 400)
         }
     }
-    async updateUser(id: string, dto: createUserDto) {
-        return
+    async updateUser(id: any, dto: createUserDto) {
+        try {
+
+            const updatedUser = await this.userModel.updateOne(id, {
+                ...dto
+            })
+
+            const modifiedUser = await this.userModel.findOne(id)
+
+            if (updatedUser) return this.buildUser(modifiedUser)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    private buildUser(user: User) {
+        const userObj = {
+            name: user.name,
+            email: user.email,
+            products: user.products
+        }
+        return { user: userObj }
     }
 }
