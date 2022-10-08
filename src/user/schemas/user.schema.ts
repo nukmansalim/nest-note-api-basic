@@ -14,7 +14,7 @@ export class User {
     @Prop({ required: true, unique: true })
     email: string
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Product" })
+    @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }])
     products: Product[]
 }
 

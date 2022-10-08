@@ -18,16 +18,12 @@ export class UserService {
     }
 
     async createUser(body: createUserDto) {
-        const { name, password, email } = body
 
+        const { name, password, email } = body
         const hash = await bcrypt.hash(password, 10)
-        try {
-            const createdUser = await this.userModel.create({
-                name, password: hash, email
-            })
-            return createdUser
-        } catch (error) {
-            if (error.code === 11000) return { message: "user is already exists" }
-        }
+        const createdUser = await this.userModel.create({
+            name, password: hash, email, product: []
+        })
+        console.log(createdUser)
     }
 }
