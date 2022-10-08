@@ -5,9 +5,16 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { PassportModule } from "@nestjs/passport"
 import { LocalStrategy } from './local.strategy';
-
+import { JwtModule } from "@nestjs/jwt"
+import { jwtConstants } from 'src/constants';
 @Module({
-  imports: [PassportModule, MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
+  imports: [
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: "1d" }
+    }),
+    PassportModule,
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy]
 })
