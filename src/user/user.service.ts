@@ -48,7 +48,7 @@ export class UserService {
     async deleteUser(id: any) {
         const deleted = await this.userModel.deleteOne({ id })
 
-        return deleted
+        return { message: "User succesfully deleted" }
     }
 
     private buildUser(user: User) {
