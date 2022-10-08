@@ -6,11 +6,11 @@ export class UserController {
     constructor(private userService: UserService) { }
     @Get()
     getUsers() {
-        return
+        return this.userService.findAllUsers()
     }
     @Get(":id")
     getSingleUser() {
-        return
+        return this.userService.findSingleUser()
     }
     @Post()
     createUser(@Body(new ValidationPipe()) createuserDto: createUserDto) {
