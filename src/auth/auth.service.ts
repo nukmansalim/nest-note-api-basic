@@ -11,9 +11,10 @@ export class AuthService {
 
         const user = await this.userModel.findOne({ email })
         if (user && bcrypt.compare(pass, user.password)) {
-            const { password, ...result } = user
-            return result
+            const { name, email, products } = user
+            return { user: { name, email, products } }
         }
         throw new HttpException("UNAUTHORIZED", HttpStatus.UNAUTHORIZED)
     }
 }
+

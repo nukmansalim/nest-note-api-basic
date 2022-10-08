@@ -10,7 +10,7 @@ export class UserService {
     private userModel: Model<UserDocument>) { }
 
     async findAllUsers(): Promise<User[]> {
-        return this.userModel.find()
+        return this.userModel.find().select("-password").exec()
     }
 
     async findSingleUser(id: any): Promise<User> {
