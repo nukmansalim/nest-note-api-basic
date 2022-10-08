@@ -45,6 +45,12 @@ export class UserService {
         }
     }
 
+    async deleteUser(id: any) {
+        const deleted = await this.userModel.deleteOne({ id })
+
+        return deleted
+    }
+
     private buildUser(user: User) {
         const userObj = {
             name: user.name,

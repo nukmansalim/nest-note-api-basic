@@ -18,11 +18,11 @@ export class UserController {
         return this.userService.createUser(dto)
     }
     @Patch(":id")
-    updateUser(@Param() id, @Body() dto: updateUserDto) {
+    updateUser(@Param("id") id: any, @Body() dto: updateUserDto) {
         return this.userService.updateUser(id, dto)
     }
     @Delete(":id")
-    deleteUser() {
-        return
+    deleteUser(@Param("id") id: string) {
+        return this.userService.deleteUser(id)
     }
 }
