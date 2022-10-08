@@ -1,4 +1,5 @@
-import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { createUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -8,19 +9,19 @@ export class UserController {
     getUsers() {
         return
     }
-    @Get()
+    @Get(":id")
     getSingleUser() {
         return
     }
     @Post()
-    createUser() {
-        return
+    createUser(@Body() body: createUserDto) {
+        return this.userService.createUser(body)
     }
-    @Patch()
+    @Patch(":id")
     updateUser() {
         return
     }
-    @Delete()
+    @Delete(":id")
     deleteUser() {
         return
     }
