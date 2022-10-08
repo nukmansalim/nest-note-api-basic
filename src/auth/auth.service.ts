@@ -16,12 +16,14 @@ export class AuthService {
         const user = await this.userModel.findOne({ email })
         if (user && bcrypt.compare(pass, user.password)) {
             const { name, email, id } = user
-            const accessToken = this.jwtService.sign({
-                user: {
-                    id, name, email
-                }
-            })
-            return { Access_Token: accessToken }
+
+            return {
+                Access_Token: this.jwtService.sign({
+                    user: {
+                        id, name, email
+                    }
+                })
+            }
         }
         throw new HttpException("UNAUTHORIZED", HttpStatus.UNAUTHORIZED)
     }

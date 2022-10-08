@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body } from '@nestjs/common';
-import { Request } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { createProductDto } from './dto/product.dto';
 import { ProductService } from './product.service';
 
@@ -11,10 +11,12 @@ export class ProductController {
         return this.productService.findAll()
     }
     @Get(":id")
+
     findOne(@Param() id: string) {
         return this.productService.findOne(id)
     }
     @Post()
+    @UseGuards(JwtAuthGuard)
     createProduct(@Body() body: createProductDto) {
         return this.productService.createProduct(body)
 
