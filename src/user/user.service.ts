@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { createUserDto } from './dto/create-user.dto';
@@ -17,7 +17,18 @@ export class UserService {
         return this.userModel.findOne().select("-password").exec()
     }
 
-    async createUser(createuserDto: createUserDto) {
-        console.log(createuserDto)
+    async createUser(body: createUserDto) {
+        try {
+            const { name, password, email } = body
+            const hash = await bcrypt.hash(password, 10)
+            const createdUser = await this.userModel.create({
+                name, password: hash, email
+            })
+
+            return createdUser
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 }
