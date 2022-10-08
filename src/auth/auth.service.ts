@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Response } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../user/schemas/user.schema';
@@ -15,13 +15,12 @@ export class AuthService {
 
         const user = await this.userModel.findOne({ email })
         if (user && bcrypt.compare(pass, user.password)) {
-            const { name, email, products, id } = user
+            const { name, email, id } = user
             const accessToken = this.jwtService.sign({
                 user: {
                     id, name, email
                 }
             })
-
             return { Access_Token: accessToken }
         }
         throw new HttpException("UNAUTHORIZED", HttpStatus.UNAUTHORIZED)
