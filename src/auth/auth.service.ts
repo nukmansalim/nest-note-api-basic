@@ -11,6 +11,9 @@ export class AuthService {
     private userModel: Model<UserDocument>,
         private jwtService: JwtService
     ) { }
+
+
+
     async login(email: string, pass: string) {
 
         const user = await this.userModel.findOne({ email })
@@ -18,11 +21,10 @@ export class AuthService {
             const { name, email, id } = user
 
             return {
+                Refresh_Token: this.jwtService.sign({ user: { id, name, email } }, { expiresIn: "7d" }),
                 Access_Token: this.jwtService.sign({
-                    user: {
-                        id, name, email
-                    }
-                })
+                    user: { id, name, email }
+                }, { expiresIn: "60m" })
             }
         }
         throw new HttpException("UNAUTHORIZED", HttpStatus.UNAUTHORIZED)
